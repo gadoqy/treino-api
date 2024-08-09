@@ -36,7 +36,27 @@ servidor.post('/treino/cinema/validacao', (req, res) => {
     res.json({ podeAssistir });
 });
 
+servidor.get('/tabuada/:numero', (req, res) => {
+    const numero = parseInt(req.params.numero, 10);
+
+    // Função para calcular a tabuada
+    function calcularTabuada(numero) {
+        let tabuada = [];
+        for (let i = 1; i <= 10; i++) {
+            tabuada.push(numero * i);
+        }
+        return tabuada;
+    }
+
+    if (isNaN(numero)) {
+        return res.status(400).json({ error: 'Número inválido' });
+    }
+
+    const resultado = calcularTabuada(numero);
+    res.json({ tabuada: resultado });
+});
+
 
 servidor.listen(PORT, () => {
-    console.log(`API subiu na porta ${PORT}`);
+    console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
