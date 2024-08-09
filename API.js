@@ -24,10 +24,6 @@ servidor.post('/treino/leituraLivro', (req, res) => {
 servidor.post('/treino/cinema/validacao', (req, res) => {
     const { idadePessoa1, idadePessoa2, Classificacao } = req.body;
 
-    if (idadePessoa1 === undefined || idadePessoa2 === undefined || Classificacao === undefined) {
-        return res.status(400).json({ error: "Você deve fornecer idadePessoa1, idadePessoa2 e Classificacao." });
-    }
-
     const classificacao = parseInt(Classificacao, 10);
 
     if (![0, 12, 14, 16, 18].includes(classificacao)) {
