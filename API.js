@@ -36,7 +36,7 @@ servidor.post('/treino/cinema/validacao', (req, res) => {
     res.json({ podeAssistir });
 });
 
-servidor.get('/tabuada/:numero', (req, res) => {
+servidor.get('/treino/tabuada/:numero', (req, res) => {
     const numero = parseInt(req.params.numero, 10);
 
     // Função para calcular a tabuada
@@ -49,7 +49,7 @@ servidor.get('/tabuada/:numero', (req, res) => {
     }
 
     if (isNaN(numero)) {
-        return res.status(400).json({ error: 'Número inválido' });
+        return res.status(400).json({ error: 'Número inválido. Ex: 1 - 2 - 3 -  4 - 5 - 6' });
     }
 
     const resultado = calcularTabuada(numero);
