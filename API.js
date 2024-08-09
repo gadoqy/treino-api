@@ -1,6 +1,7 @@
 import express from 'express';
 
-console.clear();
+
+
 
 const servidor = express();
 const PORT = 157;
