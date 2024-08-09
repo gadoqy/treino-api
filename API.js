@@ -20,7 +20,7 @@ servidor.post('/treino/leituraLivro', (req, res) => {
     });
 });
 
-servidor.post('/verificarAssistir', (req, res) => {
+servidor.post('/treino/cinema/validacao', (req, res) => {
     const { idadePessoa1, idadePessoa2, Classificacao } = req.body;
 
     if (idadePessoa1 === undefined || idadePessoa2 === undefined || Classificacao === undefined) {
