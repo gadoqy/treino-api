@@ -89,6 +89,69 @@ servidor.post('/treino/ordenacao', (req, res) => {
     return res.status(200).json({ ordem: ordem });
 });
 
+servidor.post('/treino/analiseNotas', (req, res) => {
+    const { notas } = req.body;
+
+    function calcularEstatisticas(notas) {
+        let soma = 0;
+        let maiorNota = notas[0];
+        let menorNota = notas[0];
+    
+        for (let i = 0; i < notas.length; i++) {
+            soma += notas[i];
+    
+            if (notas[i] > maiorNota) {
+                maiorNota = notas[i];
+            }
+    
+            if (notas[i] < menorNota) {
+                menorNota = notas[i];
+            }
+        }
+    
+        const media = soma / notas.length;
+    
+        return {
+            media: media,
+            maiorNota: maiorNota,
+            menorNota: menorNota
+        };
+    }
+
+    if (notas.length === 0) {
+        return res.status(400).json({ error: "O campo 'notas' deve conter pelo menos uma nota." });
+    }
+
+    const estatisticas = calcularEstatisticas(notas);
+    return res.status(200).json(estatisticas);
+});
+
+servidor.get('/combinar-cores', (req, res) => {
+    const { cor1, cor2 } = req.query;
+
+    function combinarCores(cor1, cor2) {
+        const combinacoes = {
+            "vermelho": "roxo",
+            "azul": "roxo",
+            "vermelho_amarelo": "laranja",
+            "amarelo_vermelho": "laranja",
+            "azul_amarelo": "verde",
+            "amarelo_azul": "verde"
+        };
+    
+        const chave = `${cor1.toLowerCase()}_${cor2.toLowerCase()}`;
+    
+        return combinacoes[chave] || "Combinação inválida";
+    }
+
+    const coresValidas = ["vermelho", "azul", "amarelo"];
+    if (!coresValidas.includes(cor1.toLowerCase()) || !coresValidas.includes(cor2.toLowerCase())) {
+        return res.status(400).json({ error: "As cores devem ser 'vermelho', 'azul' ou 'amarelo'." });
+    }
+
+    const corResultante = combinarCores(cor1, cor2);
+    return res.status(200).json({ corResultante: corResultante });
+});
 
 servidor.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
