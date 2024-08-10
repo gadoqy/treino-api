@@ -49,11 +49,44 @@ servidor.get('/treino/tabuada/:numero', (req, res) => {
     }
 
     if (isNaN(numero)) {
-        return res.status(400).json({ error: 'Número inválido. Ex: 1 - 2 - 3 -  4 - 5 - 6' });
+        return res.status(400).json({ error: 'Número inválido.' });
     }
 
     const resultado = calcularTabuada(numero);
     res.json({ tabuada: resultado });
+});
+
+servidor.post('/treino/ordenacao', (req, res) => {
+    const { numeros } = req.body;
+
+    function verificarOrdem(numeros) {
+        let crescente = true;
+        let decrescente = true;
+    
+        for (let i = 0; i < numeros.length - 1; i++) {
+            if (numeros[i] > numeros[i + 1]) {
+                crescente = false;
+            }
+            if (numeros[i] < numeros[i + 1]) {
+                decrescente = false;
+            }
+        }
+    
+        if (crescente) {
+            return "crescente";
+        } else if (decrescente) {
+            return "decrescente";
+        } else {
+            return "desordenados";
+        }
+    }
+
+    if (!Array.isArray(numeros)) {
+        return res.status(400).json({ error: "O campo 'numeros' deve ser um vetor." });
+    }
+
+    const ordem = verificarOrdem(numeros);
+    return res.status(200).json({ ordem: ordem });
 });
 
 
